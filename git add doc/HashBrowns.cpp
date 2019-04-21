@@ -63,7 +63,8 @@ void createFinalTable(HashTable &will, HashTable &will0, int const size){
   for(int i=0; i<size; i++){
     node* temp=will0.searchItem(i);
     //cout<<i<<endl;
-    names.push_back(vector<string>());
+    //names.push_back(vector<string>());
+    //cout<<i<<endl;
     while(temp!=nullptr){
         if(temp->next==nullptr){
           break;
@@ -72,26 +73,33 @@ void createFinalTable(HashTable &will, HashTable &will0, int const size){
         for(int k=0; k< doubles.size(); k++){
           if(doubles[k]==name){
             repeat=true;
+            j=k;
           }
         }
-        doubles.push_back(name);
         if(repeat==false){
-      //cout<<name<<endl;
-        names[i].push_back(name);//might be fucked
-      //cout<<"is this fucked"<<endl;
+        doubles.push_back(name);
+        names.push_back(vector<string>());
+        names[i].push_back(name);
+          }
         temp1=will.searchItem(i);
         while(temp1!=nullptr){
-          if(temp->next==nullptr){
-            break;
-          }
           message=temp1->key;
-          j++;
-          names[i].push_back(message);
-          temp1=temp1->next;
+          if(repeat==false){
+            names[i].push_back(message);
           }
-        }
+          else{
+            //cout<<j<<endl;
+            names[j].push_back(message);
+
+            //cout<<"yo"<<endl;
+           }
+           if(temp1->next==nullptr){
+             break;
+           }
+           temp1=temp1->next;
+          }
+
         temp=temp->next;
-        j=0;
         repeat=false;
     }
   }
