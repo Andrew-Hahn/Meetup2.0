@@ -36,27 +36,50 @@ unsigned int HashTable::hashFunction(int key)
 
 }
 
-// node* HashTable::searchItem(string key)
-// {
-//     //Compute the index by using the hash function
-//     int a=0;
-//     int index = hashFunction(stoi(key[0]);
-//     node* temp=hashTable[index];
-//     while(temp!=nullptr){
-//       if(temp->key==key){
-//         return temp;
-//       }
-//       else{
-//         if(temp->next==nullptr){
-//           return nullptr;
-//         }
-//         temp=temp->next;
-//       }
-//     }
-//     return nullptr;
-//
-//     //TODO: Search the list at that specific index and return the node if found
-// }
+node* HashTable::searchItem(int key)
+{
+    //Compute the index by using the hash function
+    int a=0;
+    int index = hashFunction(key);
+    node* temp=hashTable[index];
+    return temp;
+    // while(temp!=nullptr){
+    //   if(temp->key==key){
+    //     return temp;
+    //   }
+    //   else{
+    //     if(temp->next==nullptr){
+    //       return nullptr;
+    //     }
+    //     temp=temp->next;
+    //   }
+    // }
+    // return nullptr;
+
+    //TODO: Search the list at that specific index and return the node if found
+}
+node* HashTable::searchItem2(int key)
+{
+    //Compute the index by using the hash function
+    int a=0;
+    int index = hashFunction(key);
+    node* temp=hashTable[index];
+    return temp;
+    // while(temp!=nullptr){
+    //   if(temp->key==key){
+    //     return temp;
+    //   }
+    //   else{
+    //     if(temp->next==nullptr){
+    //       return nullptr;
+    //     }
+    //     temp=temp->next;
+    //   }
+    // }
+    // return nullptr;
+
+    //TODO: Search the list at that specific index and return the node if found
+}
 
 bool HashTable::insertItem(string key)
 {
@@ -71,6 +94,34 @@ bool HashTable::insertItem(string key)
         node* temp= hashTable[index];
         node* prev=nullptr;
         newnode->key=key;
+        newnode->next=nullptr;
+        if(temp==nullptr){
+          hashTable[index]=newnode;
+          return true;
+        }
+        while(temp!=nullptr){
+          prev=temp;
+          temp=temp->next;
+        }
+        prev->next=newnode;
+        return true;
+
+
+
+}
+bool HashTable::insertItem2(string key, string name)
+{
+
+        // TODO :
+        // Use the hash function on the key to get the index/slot,
+        // create a new node with the key and insert it in this slot's list
+        //cout<<key[0]<<endl;
+        int a=key[0]-'0';
+        int index = hashFunction(a);
+        node* newnode= new node;
+        node* temp= hashTable[index];
+        node* prev=nullptr;
+        newnode->key=name;
         newnode->next=nullptr;
         if(temp==nullptr){
           hashTable[index]=newnode;
@@ -107,3 +158,4 @@ void HashTable::printTable()
 // bool HashTable::findThreeSum(int arr[], HashTable &ht){
 
 // }
+
