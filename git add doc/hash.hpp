@@ -53,6 +53,7 @@ class HashTable
     return: false if 'key' already exists in the table, otherwise true
   	*/
     bool insertItem(string key);
+    bool insertItem2(string key, string name);
 
     /*
   	Method Name: hashFunction
@@ -73,7 +74,8 @@ class HashTable
   	Purpose: function to search for "key" in the Hash Table
     return: node with "key" as it's data if found, otherwise NULL
   	*/
-    //node* searchItem(string key);
+    node* searchItem(int key);
+    node* searchItem2(int key);
 };
 
 #endif
