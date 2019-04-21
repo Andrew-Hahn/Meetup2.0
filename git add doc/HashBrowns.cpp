@@ -52,7 +52,6 @@ void createHash2(string fileName2, HashTable &will0){
 
 void createFinalTable(HashTable &will, HashTable &will0, int const size){
   string name;
-  int counter=0;
   string message;
   vector<string> doubles;
   int j=0;
@@ -64,73 +63,51 @@ void createFinalTable(HashTable &will, HashTable &will0, int const size){
   for(int i=0; i<size; i++){
     node* temp=will0.searchItem(i);
     //cout<<i<<endl;
-    //names.push_back(vector<string>());
-    cout<<i<<"-"<<endl;
+    names.push_back(vector<string>());
     while(temp!=nullptr){
-        //cout<<name<<endl;
-        repeat=false;
+        if(temp->next==nullptr){
+          break;
+        }
         name=temp->key;
         for(int k=0; k< doubles.size(); k++){
-           //cout<<doubles[k]<<endl<<name<<"-"<<endl;
           if(doubles[k]==name){
-            //cout<<"Yo"<<endl;
             repeat=true;
-            j=k;
           }
         }
-        if(repeat==false){
         doubles.push_back(name);
-        names.push_back(vector<string>());
-        //cout<<"andrew"<<endl;
-        names[counter].push_back(name);
-        //cout<<"andrew is in"<<endl;
-          }
+        if(repeat==false){
+      //cout<<name<<endl;
+        names[i].push_back(name);//might be fucked
+      //cout<<"is this fucked"<<endl;
         temp1=will.searchItem(i);
         while(temp1!=nullptr){
-          message=temp1->key;
-          if(repeat==false){
-            //cout<<"i"<<endl;
-            //cout<<counter<<endl;
-            names[counter].push_back(message);
-            //cout<<"j"<<endl;
-          }
-          else{
-            names[j].push_back(message);
-           }
-           if(temp1->next==nullptr){
-             //repeat=false;
-             break;
-           }
-           temp1=temp1->next;
-          }
-        if(temp->next==nullptr){
-            if(repeat==false){
-              //cout<<"are u the bad"<<endl;
-              counter++;
-            }
-            //repeat=false;
+          if(temp->next==nullptr){
             break;
-        }
-        if(repeat==false){
-            counter++;
+          }
+          message=temp1->key;
+          j++;
+          names[i].push_back(message);
+          temp1=temp1->next;
+          }
         }
         temp=temp->next;
-        //repeat=false;
+        j=0;
+        repeat=false;
     }
   }
   for (int i = 0; i < names.size(); i++) {
        for (int j = 0; j < names[i].size(); j++)
            cout << names[i][j] << endl;
    }
-   for(int j=0; j<doubles.size(); j++){
-     cout<<doubles[j]<<endl;
-   }
+
 }
 //Frisbee,Studying,SpikeBall,Swimming,WorkingOut,Biking,Running,Gaming,Climbing
 int main(int argc, char const *argv[]){
   //argv[1]=messages.txt
   //argv[2]=interests.txt
   //argv[3]=number of interests(9)
+  //g++ -std=c++11 HashBrowns.cpp hash.cpp 
+  //./a.out messages.txt interests.txt 9
   int const size=stoi(argv[3]);
   HashTable will(size);
   string fileName=argv[1];
