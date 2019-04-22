@@ -89,13 +89,13 @@ bool HashTable::insertItem(string key)
         // create a new node with the key and insert it in this slot's list
         //cout<<key[0]<<endl;
         int a=key[0]-'0';
-        int z=key.length();
-        string newstring=key.substr(2,z);
+        //int z=key.length();
+        //string newstring=key.substr(2,z);
         int index = hashFunction(a);
         node* newnode= new node;
         node* temp= hashTable[index];
         node* prev=nullptr;
-        newnode->key=newstring;
+        newnode->key=key;
         newnode->next=nullptr;
         if(temp==nullptr){
           hashTable[index]=newnode;
@@ -200,3 +200,4 @@ void HashTable::printTable()
 // bool HashTable::findThreeSum(int arr[], HashTable &ht){
 
 // }
+
