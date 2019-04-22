@@ -157,11 +157,42 @@ void sortVector(vector<vector<string>> &names){
         //   }
         // }
 
-    for (int i = 0; i < names.size(); i++) {
-         for (int j = 0; j < names[i].size(); j++){
-             cout << names[i][j] << endl;
+  //   for (int i = 0; i < names.size(); i++) {
+  //        for (int j = 0; j < names[i].size(); j++){
+  //            cout << names[i][j] << endl;
+  //
+  //     }
+  // }
+}
+
+void standardTime(vector<vector<string>> &names){
+  for(int i = 0; i < names.size(); i++){
+    for(int j = 1; j < names[i].size(); j++){
+      if(stoi(names[i][j].substr(0,2)) > 12){
+        int toChange = stoi(names[i][j].substr(0,2)) - 12;
+        string str = to_string(toChange);
+        names[i][j].replace(0,2,str);
+        if(stoi(names[i][j].substr(0,2)) >= 10){
+          names[i][j].insert(5," PM ");
+        }
+        else{
+          names[i][j].insert(4," PM ");
+        }
 
       }
+      else if(names[i][j].substr(0,2) == "12"){
+        names[i][j].insert(5, " PM ");
+      }
+      if(names[i][j].substr(0,1) == "0"){
+        names[i][j].erase(0,1);
+        names[i][j].insert(4," AM ");
+      }
+    }
+  }
+  for(int k = 0; k < names.size(); k++){
+    for(int h = 0; h < names[k].size(); h++){
+      cout << names[k][h] << endl;
+    }
   }
 }
 
@@ -170,6 +201,8 @@ void sortVector(vector<vector<string>> &names){
     //argv[1]=messages.txt
     //argv[2]=interests.txt
     //argv[3]=number of interests(9)
+    //g++ -std=c++11 HashBrowns.cpp hash.cpp
+    //./a.out messages.txt interests.txt 9
     vector<vector<string>> names;
     vector<string> doubles;
     int const size=stoi(argv[3]);
@@ -184,5 +217,6 @@ void sortVector(vector<vector<string>> &names){
 
     createFinalTable(doubles, names, will, will0, size);
     sortVector(names);
+    standardTime(names);
 
   }
