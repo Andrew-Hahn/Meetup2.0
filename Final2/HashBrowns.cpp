@@ -381,8 +381,9 @@ void deleteInterest(HashTable &will0, string name, int interest){
   }
 }
 
-void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<<string>> &names){
+void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<string>> &names, HashTable &will){
   bool done = false;
+  string message;
   string interest;
   while(done == false){
     cout << "What interest would you like to add? Enter 'back' if you would like to exit." << endl;
@@ -401,14 +402,20 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vec
       temp->next = newNode;
       newNode->next = nullptr;
       graphOfGroups.addUserInterest(name,interest);
-    }
-  }
-    for(int i=0; i<names.size(); i++){
-      if(names[i][0]==name){
-        node* temp0=
+      for(int i=0; i<names.size(); i++){
+        if(names[i][0]==name){
+          node* temp0=will.searchItem(stoi(interest));
+          while(temp0!=nullptr){
+            message=temp0->key;
+            names[i].push_back(message);
+            temp0=temp0->next;
+          }
+        }
       }
     }
-  
+  }
+
+
 }
 
 void deleteNames(vector<vector<string>> &names, vector<string> &doubles){
@@ -544,7 +551,7 @@ void displayGroupMenu(){
           cout<<"What is your name?: "<<endl;
           getline(cin, name);
           cout<<"Welcome "<<name<<" you have been added:"<<endl;
-          addInterest(name,will0,groups, names);
+          addInterest(name,will0,groups, names, will);
         }
 
         break;
@@ -596,7 +603,7 @@ void displayGroupMenu(){
               currentUser=newName;
             }
             else if(userInput=="2"){
-              addInterest(currentUser,will0,groups,names);
+              addInterest(currentUser,will0,groups,names, will);
             }
 
             else if(userInput=="3"){
