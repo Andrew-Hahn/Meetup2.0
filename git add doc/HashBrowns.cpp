@@ -189,9 +189,63 @@ void standardTime(vector<vector<string>> &names){
       }
     }
   }
-  for(int k = 0; k < names.size(); k++){
-    for(int h = 0; h < names[k].size(); h++){
-      cout << names[k][h] << endl;
+  // for(int k = 0; k < names.size(); k++){
+  //   for(int h = 0; h < names[k].size(); h++){
+  //     cout << names[k][h] << endl;
+  //   }
+  // }
+  //uncomment later
+}
+void addInterest(string name, HashTable &will0){
+  bool done = false;
+  string interest;
+  while(done == false){
+    cout << "What interest would you like to add? Enter 'back' if you would like to exit." << endl;
+    cout << "Frisbee(1),Studying(2),SpikeBall(3),Swimming(4),Working Out(5),Biking(6),Running(7),Gaming(8),Climbing(9)" << endl;
+    getline(cin,interest);
+    if(interest == "back"){
+      done = true;
+    }
+    else{
+      node* newNode = new node;
+      newNode->key = name;
+      node* temp = will0.searchItem(stoi(interest));
+      while(temp->next != nullptr){
+        temp = temp->next;
+      }
+      temp->next = newNode;
+      newNode->next = nullptr;
+    }
+  }
+}
+
+void deleteNames(vector<vector<string>> &names, vector<string> &doubles){
+  for (int i = 0; i < names.size(); i++){
+    names[i].clear();
+  }
+  doubles.clear();
+}
+
+void changeName(vector<vector<string>> &names, string currName, string newName){
+  for(int i = 0; i < names.size(); i++){
+    if(names[i][0] == currName){
+      //cout << names[i][0] << endl;
+      names[i][0].replace(names[i][0].begin(),names[i][0].end(),newName);
+    }
+  }
+  // for(int h = 0; h < names.size(); h++){
+  //   for(int j = 0; j < names[h].size(); j++){
+  //     cout << names[h][j] << endl;
+  //   }
+  // }
+}
+
+void printInterests(vector<vector<string>> &names, string name){
+  for(int i = 0; i < names.size(); i++){
+    if(names[i][0] == name){
+      for(int j = 0; j < names[i].size(); j++){
+        cout << names[i][j] << endl;
+      }
     }
   }
 }
@@ -214,9 +268,31 @@ void standardTime(vector<vector<string>> &names){
     string fileName2=argv[2];
     createHash2(fileName2, will0);
     will0.printTable();
-
     createFinalTable(doubles, names, will, will0, size);
     sortVector(names);
     standardTime(names);
+    // addInterest("Ryan",will0);
+    // will0.printTable();
+    // // cout << "deleting" << endl;
+    // // deleteNames(names,doubles);
+    // vector<string> doubles2;
+    // vector<vector<string>> names2;
+    // //cout << "creating" << endl;
+    // createFinalTable(doubles2,names2,will,will0,size);
+    // //cout << "sorting" << endl;
+    // sortVector(names2);
+    // //cout << "changing time" << endl;
+    // standardTime(names2);
+    changeName(names,"Ryan","Steve");
+    vector<string> doubles2;
+    vector<vector<string>> names2;
+    //cout << "creating" << endl;
+    createFinalTable(doubles2,names2,will,will0,size);
+    //cout << "sorting" << endl;
+    sortVector(names2);
+    //cout << "changing time" << endl;
+    standardTime(names2);
+    printInterests(names, "Steve");
+
 
   }
