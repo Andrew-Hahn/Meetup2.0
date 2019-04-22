@@ -1,20 +1,20 @@
 1,Frisbee,2,Studying,3,SpikeBall,4,Swimming,5,WorkingOut,6,Biking,7,Running,8,Gaming,9,Climbing
-1,Frisbee at Farrand Field at 7:00 pm
-1,Thowing some plastic on Norlin come join
-1,Pick up this weekend on Kit
-2,Studying for Calc 1 in Math Library in 1 hour come join
-2,Studying for Data Structures in EC at 5:00 PM
-3,Playing SpikeBall on Lower Fields in an hour
-4,Swimming at the Rec at 6:00 am come join
-4,Swimming at the Rec at noon
-5,Working Out at the Field at 7:00am come join
-5,Doing a lifting workout at 3:00Pm at the rec
-6,Mountain Biking at the Mesa Loop coome join. Starting at 9:00 am Sunday
-6,Biking Up FlagStaff. All Skill Levels welcome. Starting at 7:30am
-7,Running around Boulder. Starting at Campus come join.
-7,Trail Running.Starting at 9:00am. 
-8,Smash Tournament in the UMC. Starting at 8Pm come join
-8,Apex Tournament in Willard Hall. Starting at 10Pm.
-9,Climbing the second flatiron at 1:00Pm. Bring your own equitment
-9,Climbing Angels Way. 5.3. Come join!
-9,Climbing in the Rec at 7:30Pm!
+1 19:00 Frisbee at Farrand Field.
+1 12:00 Throwing some plastic on Norlin come join.
+1 16:00 Pick up frisbee on Kit.
+2 19:00 Studying for Calc 1 in Math Library come join.
+2 17:00 Studying for Data Structures in EC.
+3 17:00 Playing SpikeBall on Lower Fields.
+4 06:00 Swimming at the Rec come join.
+4 12:00 Swimming at the Rec.
+5 07:00 Working Out at the Field come join.
+5 15:00 Doing a lifting workout at the rec.
+6 09:00 Mountain Biking at the Mesa Loop coome join.
+6 07:00 Biking Up FlagStaff. All Skill Levels welcome.
+7 08:00 Running around Boulder. Starting at Campus come join.
+7 09:00 Trail Running.
+8 20:00 Smash Tournament in the UMC.
+8 22:00 Apex Tournament in Willard Hall.
+9 13:00 Climbing the second flatiron. Bring your own equitment.
+9 08:00 Climbing Angels Way. 5.3. Come join!
+9 19:00 Climbing in the Rec!
