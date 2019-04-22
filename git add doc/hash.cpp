@@ -140,6 +140,46 @@ bool HashTable::insertItem2(string key, string name)
 
 }
 
+void HashTable::deleteAtHead(int index){
+  hashTable[index]=hashTable[index]->next;
+}
+
+void HashTable::deleteAtIndex(int index, int interest)
+{
+  //cout<<index<<endl;
+  bool isDeleted = false;
+  unsigned int hash=hashFunction(interest);
+	node *pres = hashTable[hash];
+	node *prev = nullptr;
+  int currIndex = 0;
+  //TODO Complete this function
+  while (isDeleted == false){
+    if(currIndex == index){
+      //cout<<"hello";
+      if(pres->next == NULL){
+        delete pres;
+        prev->next = NULL;
+        isDeleted=true;
+      }
+      else{
+        //cout<<"do we get here"<<endl;
+        prev->next = pres->next;
+        delete pres;
+        isDeleted=true;
+      }
+    }
+    else{
+      //cout<<"yo";
+      prev=pres;
+      pres = pres->next;
+      //cout<<currIndex<<endl;
+      currIndex++;
+
+    }
+  }
+}
+
+
 void HashTable::printTable()
 {
     for (int i = 0; i < tableSize; i++) {
@@ -160,3 +200,4 @@ void HashTable::printTable()
 // bool HashTable::findThreeSum(int arr[], HashTable &ht){
 
 // }
+
