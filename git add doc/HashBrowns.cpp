@@ -133,18 +133,18 @@ void sortVector(vector<vector<string>> &names){
         // cout<<names[i][j]<<"-"<<names[i][j].substr(2,2)<<endl<<names[i][j+1]<<"-"<<names[i][j+1].substr(2,2)<<endl;
         // cout<<i<<"-"<<j<<endl;
         // cout<<names[i].size()<<endl;
-        if(stoi(names[i][k].substr(2,2))>stoi(names[i][k+1].substr(2,2))){
+        if(stoi(names[i][k].substr(0,2))>stoi(names[i][k+1].substr(0,2))){
           temp=names[i][k];
           names[i][k]=names[i][k+1];
           names[i][k+1]=temp;
         }
-        else if(stoi(names[i][k].substr(2,2))==stoi(names[i][k+1].substr(2,2))){
-          if(stoi(names[i][k].substr(5,2))>stoi(names[i][k+1].substr(5,2))){
+        else if(stoi(names[i][k].substr(0,2))==stoi(names[i][k+1].substr(0,2))){
+          if(stoi(names[i][k].substr(3,2))>stoi(names[i][k+1].substr(3,2))){
             temp=names[i][k];
             names[i][k]=names[i][k+1];
             names[i][k+1]=temp;
           }
-        } 
+        }
       }
       }
     }
@@ -186,4 +186,3 @@ void sortVector(vector<vector<string>> &names){
     sortVector(names);
 
   }
-
