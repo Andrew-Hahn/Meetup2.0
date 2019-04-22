@@ -7,6 +7,20 @@
 #include <vector>
 #include "hash.hpp"
 
+void displayMainMenu()
+{
+    cout << "Welcome to Meetup 2.0:" << endl;
+    cout << "+=====Main Menu=========+" << endl;
+    cout << " 1. Add New User " << endl;
+    cout << " 2. Sign In " << endl;
+    cout << " 3. Edit Profile"<<endl;
+    cout << " 4. View Feed " << endl;
+    cout << " 5. Send Message " << endl;
+    cout << " 6. Quit " << endl;
+    cout << "+-----------------------+" << endl;
+    cout << "#> ";
+}
+
 
 void createHash1(string fileName, HashTable &will){
   int name=0;
@@ -292,6 +306,19 @@ void printInterests(vector<vector<string>> &names, string name){
   }
 }
 
+bool isInTable(vector<vector<string>> &names, HashTable& will0, string name){
+  for(int a=0; a<names.size(); a++){
+    node* temp=will0.searchItem(a);
+    while(temp!=nullptr){
+      if(temp->key==name){
+        return true;
+      }
+          temp=temp->next;
+    }
+  }
+  return false;
+}
+
   //Frisbee,Studying,SpikeBall,Swimming,WorkingOut,Biking,Running,Gaming,Climbing
   int main(int argc, char const *argv[]){
     //argv[1]=messages.txt
@@ -305,25 +332,140 @@ void printInterests(vector<vector<string>> &names, string name){
     HashTable will(size);
     string fileName=argv[1];
     createHash1(fileName, will);
-    will.printTable();
     HashTable will0(size);
     string fileName2=argv[2];
     createHash2(fileName2, will0);
-    will0.printTable();
-
     createFinalTable(doubles, names, will, will0, size);
     sortVector(names);
     standardTime(names);
-    string name="Andrew";
-    int interest=9;
-    deleteInterest(will0, name, interest);
-    cout<<"deleting"<<endl;
-    will0.printTable();
-    addInterest("Ryan",will0);
-    will0.printTable();
-    changeName(names,"Ryan","Steve", will0);
-    will0.printTable();
-    printInterests(names, "Steve");
+    // string name="Andrew";
+    // int interest=9;
+    // deleteInterest(will0, name, interest);
+    // cout<<"deleting"<<endl;
+    // will0.printTable();
+    // addInterest("Ryan",will0);
+    // will0.printTable();
+    // changeName(names,"Ryan","Steve", will0);
+    // will0.printTable();
+    // printInterests(names, "Steve");
+    // bool exit=false;
+    // string user_input;
+    // int numerical_input;
+    // string currentUser="defualt";
+    bool exit = false;
+    string user_input;
+    int numerical_input;
+    string currentUser="defualt";
+    while(exit!=true){
+      displayMainMenu();
+      getline(cin, user_input);
+      numerical_input=stoi(user_input);
+      switch(numerical_input){
+        case 1:{
+
+          string name;
+          cout<<"Welcome new user!"<<endl;
+          cout<<"What is your name?: "<<endl;
+          getline(cin, name);
+          cout<<"Welcome "<<name<<" you have been added"<<endl;
+          addInterest(name,will0);
+        }
+
+        break;
+
+        case 2:{
+          bool exitLogin=false;
+          while(!exitLogin){
+          string name;
+          cout<<"Enter Your Name: (Or enter \"back\" to exit login)"<<endl;
+          getline(cin, name);
+          if(isInTable(names,will0,name) || name=="back" || name=="Back"){
+            if(name!="back" && name!="Back"){
+              cout<<"Welcome: "<<name<<endl;
+              currentUser=name;
+            }
+            exitLogin=true;
+          }
+
+          else{
+            cout<<"Sorry we couldn't find user: "<< name <<endl;
+          }
+        }
+        }
+        break;
+
+        case 3:{
+          bool exitEdit=false;
+          if(currentUser=="defualt"){
+            cout<<"Must Login to Edit a Profile"<<endl;
+            break;
+          }
+          while(!exitEdit){
+            string userInput;
+            cout << "Welcome to Profile Editor:" << endl;
+            cout << " 1. Change UserName " << endl;
+            cout << " 2. Add Interests " << endl;
+            cout << " 3. Remove Interests"<<endl;
+            cout << " 4. Exit Profile Editor"<<endl;
+            getline(cin, userInput);
+
+            if(userInput=="1"){
+              string newName;
+              cout<<"Enter new name: "<<endl;
+              getline(cin, newName);
+              changeName(names,currentUser,newName,will0);
+              cout<<"Name changed from: "<<currentUser<<" to: "<<newName<<endl;
+              currentUser=newName;
+            }
+            else if(userInput=="2"){
+              addInterest(currentUser,will0);
+            }
+
+            else if(userInput=="3"){
+              while(true){
+              string delInterest;
+              cout<<"Your current Interests are:";
+              printInterests(names, currentUser);
+              cout<<endl;
+              cout<<"Which would you like to remove?"<<endl;
+              cout << "Frisbee(1),Studying(2),SpikeBall(3),Swimming(4),Working Out(5),Biking(6),Running(7),Gaming(8),Climbing(9)" << endl;
+              getline(cin, delInterest);
+              deleteInterest(will0,currentUser,stoi(delInterest));
+            }
+
+            }
+            else if(userInput=="4"){
+              break;
+            }
+          }
+
+        }
+        break;
+
+        case 4:{
+          printInterests(names,currentUser);
+        }
+        break;
+
+        case 5:{
+          cout<<"Case 5"<<endl;
+        }
+        break;
+
+        case 6:
+        {
+        cout<<"Quitting... "<<endl;
+        cout<<"Goodbye!"<<endl;
+        exit=true;
+        break;
+        }
+
+        default:
+        {
+        cout<<"Invalid Input, Please Enter a  number between 1 and 5"<<endl;
+        break;
+        }
+      }
+    }
 
   }
-
