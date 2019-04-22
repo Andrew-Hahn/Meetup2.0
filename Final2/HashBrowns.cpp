@@ -290,13 +290,13 @@ void sortVector(vector<vector<string>> &names){
         // cout<<names[i][j]<<"-"<<names[i][j].substr(2,2)<<endl<<names[i][j+1]<<"-"<<names[i][j+1].substr(2,2)<<endl;
         // cout<<i<<"-"<<j<<endl;
         // cout<<names[i].size()<<endl;
-        if(stoi(names[i][k].substr(0,2))>stoi(names[i][k+1].substr(0,2))){
+        if(stoi(names[i][k].substr(2,2))>stoi(names[i][k+1].substr(2,2))){
           temp=names[i][k];
           names[i][k]=names[i][k+1];
           names[i][k+1]=temp;
         }
-        else if(stoi(names[i][k].substr(0,2))==stoi(names[i][k+1].substr(0,2))){
-          if(stoi(names[i][k].substr(3,2))>stoi(names[i][k+1].substr(3,2))){
+        else if(stoi(names[i][k].substr(2,2))==stoi(names[i][k+1].substr(2,2))){
+          if(stoi(names[i][k].substr(5,2))>stoi(names[i][k+1].substr(5,2))){
             temp=names[i][k];
             names[i][k]=names[i][k+1];
             names[i][k+1]=temp;
@@ -325,24 +325,24 @@ void sortVector(vector<vector<string>> &names){
 void standardTime(vector<vector<string>> &names){
   for(int i = 0; i < names.size(); i++){
     for(int j = 1; j < names[i].size(); j++){
-      if(stoi(names[i][j].substr(0,2)) > 12){
-        int toChange = stoi(names[i][j].substr(0,2)) - 12;
+      if(stoi(names[i][j].substr(2,2)) > 12){
+        int toChange = stoi(names[i][j].substr(2,2)) - 12;
         string str = to_string(toChange);
-        names[i][j].replace(0,2,str);
-        if(stoi(names[i][j].substr(0,2)) >= 10){
-          names[i][j].insert(5," PM ");
+        names[i][j].replace(2,2,str);
+        if(stoi(names[i][j].substr(2,2)) >= 10){
+          names[i][j].insert(7," PM ");
         }
         else{
-          names[i][j].insert(4," PM ");
+          names[i][j].insert(6," PM ");
         }
 
       }
-      else if(names[i][j].substr(0,2) == "12"){
-        names[i][j].insert(5, " PM ");
+      else if(names[i][j].substr(2,2) == "12"){
+        names[i][j].insert(7, " PM ");
       }
-      if(names[i][j].substr(0,1) == "0"){
-        names[i][j].erase(0,1);
-        names[i][j].insert(4," AM ");
+      if(names[i][j].substr(2,1) == "0"){
+        names[i][j].erase(2,1);
+        names[i][j].insert(6," AM ");
       }
     }
   }
@@ -381,7 +381,7 @@ void deleteInterest(HashTable &will0, string name, int interest){
   }
 }
 
-void addInterest(string name, HashTable &will0, Graph &graphOfGroups){
+void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<<string>> &names){
   bool done = false;
   string interest;
   while(done == false){
@@ -403,6 +403,12 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups){
       graphOfGroups.addUserInterest(name,interest);
     }
   }
+    for(int i=0; i<names.size(); i++){
+      if(names[i][0]==name){
+        node* temp0=
+      }
+    }
+  
 }
 
 void deleteNames(vector<vector<string>> &names, vector<string> &doubles){
@@ -488,7 +494,7 @@ void displayGroupMenu(){
       cout<<"Usage is ./a.out messages.txt interests.txt 9 allGroups.txt groupMembers.txt"<<endl;
       return EXIT_FAILURE;
     }
-    
+
     vector<vector<string>> names;
     vector<string> doubles;
     int const size=stoi(argv[3]);
@@ -538,7 +544,7 @@ void displayGroupMenu(){
           cout<<"What is your name?: "<<endl;
           getline(cin, name);
           cout<<"Welcome "<<name<<" you have been added:"<<endl;
-          addInterest(name,will0,groups);
+          addInterest(name,will0,groups, names);
         }
 
         break;
@@ -590,7 +596,7 @@ void displayGroupMenu(){
               currentUser=newName;
             }
             else if(userInput=="2"){
-              addInterest(currentUser,will0,groups);
+              addInterest(currentUser,will0,groups,names);
             }
 
             else if(userInput=="3"){
