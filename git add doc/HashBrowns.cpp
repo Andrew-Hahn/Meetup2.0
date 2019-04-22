@@ -50,12 +50,12 @@ void createHash2(string fileName2, HashTable &will0){
 
 }
 
-void createFinalTable(HashTable &will, HashTable &will0, int const size){
+void createFinalTable(vector<string>& doubles,vector<vector<string>>& names, HashTable &will, HashTable &will0, int const size){
   string name;
   string message;
-  vector<string> doubles;
+  //vector<string> doubles;
   int j=0;
-  vector<vector<string>> names;
+  //vector<vector<string>> names;
   //string names[100][10];
   node* temp;
   node* temp1;
@@ -106,8 +106,8 @@ int main(int argc, char const *argv[]){
   //argv[1]=messages.txt
   //argv[2]=interests.txt
   //argv[3]=number of interests(9)
-  //g++ -std=c++11 HashBrowns.cpp hash.cpp 
-  //./a.out messages.txt interests.txt 9
+  vector<vector<string>> names
+  vector<string> doubles
   int const size=stoi(argv[3]);
   HashTable will(size);
   string fileName=argv[1];
@@ -118,6 +118,7 @@ int main(int argc, char const *argv[]){
   createHash2(fileName2, will0);
   will0.printTable();
 
-  createFinalTable(will, will0, size);
+  createFinalTable(doubles, names, will, will0, size);
 
 }
+
