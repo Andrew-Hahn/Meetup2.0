@@ -68,7 +68,8 @@ class HashTable
     return: none
   	*/
     void printTable();
-
+    void deleteAtHead(int index);
+    void deleteAtIndex(int index, int interest);
     /*
   	Method Name: searchItem
   	Purpose: function to search for "key" in the Hash Table
