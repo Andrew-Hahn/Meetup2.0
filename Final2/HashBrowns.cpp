@@ -17,9 +17,8 @@ void displayMainMenu()
     cout << " 2. Sign In " << endl;
     cout << " 3. Edit Profile"<<endl;
     cout << " 4. View Feed " << endl;
-    cout << " 5. Send Message " << endl;
-    cout << " 6. Groups " << endl;
-    cout << " 7. Quit " <<endl;
+    cout << " 5. Groups " << endl;
+    cout << " 6. Quit " <<endl;
     cout << "+-----------------------+" << endl;
     cout << "#> ";
 }
@@ -354,7 +353,7 @@ void standardTime(vector<vector<string>> &names){
   }
 }
 
-void deleteInterest(HashTable &will0, string name, int interest){
+void deleteInterest(HashTable &will0, string name, int interest, vector<vector<string>> &names){
   int a=0;
   bool isDeleted=false;
   node* temp=will0.searchItem(interest);
@@ -363,6 +362,7 @@ void deleteInterest(HashTable &will0, string name, int interest){
     if(temp->key==name&& a==0){
       will0.deleteAtHead(a);
       isDeleted=true;
+      //delete in vector
     }
     else if(temp->next==nullptr){
       will0.deleteAtIndex(a, interest);
@@ -370,21 +370,30 @@ void deleteInterest(HashTable &will0, string name, int interest){
     }
     else if(temp->key==name){
       will0.deleteAtIndex(a, interest);
-      cout<<"Yo"<<endl;
       isDeleted=true;
     }
     else{
       temp=temp->next;
       a++;
-      cout<<"??"<<endl;
+    }
+  }
+  for(int i=0; i<names.size(); i++){
+    if(names[i][0]==name){
+      for(int j=1; j<names[i].size(); j++){
+        if(stoi(names[i][j].substr(0,1))==interest){
+          names[i].erase(names[i].begin()+j);
+          j--;
+        }
+      }
     }
   }
 }
 
-void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<string>> &names, HashTable &will){
+void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<string>> &names, HashTable &will, bool new0){
   bool done = false;
   string message;
   string interest;
+  int zz=0;
   while(done == false){
     cout << "What interest would you like to add? Enter 'back' if you would like to exit." << endl;
     cout << "Frisbee(1),Studying(2),SpikeBall(3),Swimming(4),Working Out(5),Biking(6),Running(7),Gaming(8),Climbing(9)" << endl;
@@ -402,6 +411,8 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vec
       temp->next = newNode;
       newNode->next = nullptr;
       graphOfGroups.addUserInterest(name,interest);
+
+      if(new0==false){
       for(int i=0; i<names.size(); i++){
         if(names[i][0]==name){
           node* temp0=will.searchItem(stoi(interest));
@@ -413,8 +424,25 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vec
         }
       }
     }
-  }
+    else{
+      node* temp1=will.searchItem(stoi(interest));
+      int z=names.size();
+      names.push_back(vector<string>());
+      names[z].push_back(name);
+      while(temp1!=nullptr){
+        //cout<<"hello"<<endl;
+          message=temp1->key;
+          temp1=temp1->next;
+          names[z].push_back(message);
+          new0=false;
+      }
 
+    }
+
+  }
+}
+  sortVector(names);
+  standardTime(names);
 
 }
 
@@ -455,7 +483,9 @@ void changeName(vector<vector<string>> &names, string currName, string newName, 
 
 void printInterests(vector<vector<string>> &names, string name){
   for(int i = 0; i < names.size(); i++){
+    //cout<<"looking"<<endl;
     if(names[i][0] == name){
+      cout<<"found"<<endl;
       for(int j = 0; j < names[i].size(); j++){
         cout << names[i][j] << endl;
       }
@@ -486,6 +516,11 @@ void displayGroupMenu(){
   cout << "+-----------------------+" << endl;
   cout << "#> ";
 
+}
+
+void addUser(HashTable &will, HashTable &will0, vector<vector<string>> &names, string name, Graph &graphOfGroups){
+  bool new0=true;
+  addInterest(name,will0,graphOfGroups, names, will, new0);
 }
 //main method
   //Frisbee,Studying,SpikeBall,Swimming,WorkingOut,Biking,Running,Gaming,Climbing
@@ -551,7 +586,7 @@ void displayGroupMenu(){
           cout<<"What is your name?: "<<endl;
           getline(cin, name);
           cout<<"Welcome "<<name<<" you have been added:"<<endl;
-          addInterest(name,will0,groups, names, will);
+          addUser(will, will0, names, name, groups);
         }
 
         break;
@@ -603,11 +638,13 @@ void displayGroupMenu(){
               currentUser=newName;
             }
             else if(userInput=="2"){
-              addInterest(currentUser,will0,groups,names, will);
+              bool new0=false;
+              addInterest(currentUser,will0,groups,names, will, new0);
             }
 
             else if(userInput=="3"){
-              while(true){
+              bool stay=true;
+              while(stay==true){
               string delInterest;
               cout<<"Your current Interests are:";
               printInterests(names, currentUser);
@@ -615,9 +652,15 @@ void displayGroupMenu(){
               cout<<"Which would you like to remove?"<<endl;
               cout << "Frisbee(1),Studying(2),SpikeBall(3),Swimming(4),Working Out(5),Biking(6),Running(7),Gaming(8),Climbing(9)" << endl;
               getline(cin, delInterest);
-              int delInterestNum=stoi(delInterest);
-              deleteInterest(will0,currentUser,delInterestNum);
-              groups.removeUserInterest(currentUser,delInterest);
+              if(delInterest=="back"){
+                stay=false;
+              }
+              else{
+                int delInterestNum=stoi(delInterest);
+                deleteInterest(will0,currentUser,delInterestNum, names);
+                groups.removeUserInterest(currentUser,delInterest);
+              }
+
             }
             }
             else if(userInput=="4"){
@@ -633,13 +676,8 @@ void displayGroupMenu(){
           printInterests(names,currentUser);
         }
         break;
-
-        case 5:{
-          cout<<"Case 5"<<endl;
-        }
-        break;
         //this case opens the groups interface
-        case 6:{
+        case 5:{
           bool exitGroups=false;
 
           while(!exitGroups){
@@ -752,7 +790,7 @@ void displayGroupMenu(){
         }
 
         //this case exits the program
-        case 7:
+        case 6:
         {
         cout<<"Quitting... "<<endl;
         cout<<"Goodbye!"<<endl;
@@ -769,3 +807,4 @@ void displayGroupMenu(){
     }
 
   }
+
