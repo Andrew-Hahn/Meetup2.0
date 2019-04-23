@@ -205,6 +205,59 @@ void intitializeGraph(string fileName2, string fileName3, string fileName4, Grap
   myfile3.close();
 
 }
+void fixTime(vector<vector<string>> &names){
+  int num;
+  for(int i=0; i<names.size()-1; i++){
+    //cout<<i<<endl;
+    for(int j=1; j<names[i].size(); j++){
+      //cout<<j<<endl;
+      if(names[i][j].substr(8,2)=="PM"){
+        if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+          //cout<<"if"<<endl;
+          num = stoi(names[i][j].substr(2,2));
+          //cout<<"of"<<endl;
+          num = num + 12;
+          names[i][j].erase(8,2);
+          names[i][j].erase(2,2);
+          string newNum = to_string(num);
+          names[i][j].insert(2,newNum);
+          names[i][j].erase(7,1);
+        }
+        else if(names[i][j].substr(2,2)=="12"){
+          //cout<<"1"<<endl;
+          names[i][j].erase(8,2);
+          //cout<<"2"<<endl;
+          names[i][j].erase(7,1);
+        }
+        else{
+          //cout<<"3"<<endl;
+          names[i][j].erase(8,2);
+          names[i][j].insert(2,1,'0');
+          names[i][j].erase(7,1);
+          //cout<<"4"<<endl;
+        }
+
+      }
+      else{
+        if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+        //  cout<<"6"<<endl;
+          names[i][j].erase(8,2);
+          names[i][j].erase(7,1);
+        //  cout<<"7"<<endl;
+        }
+        else{
+          //cout<<"8"<<endl;
+          names[i][j].erase(8,2);
+          names[i][j].insert(2,1,'0');
+          //cout<<"9"<<endl;
+          names[i][j].erase(7,1);
+        }
+        }
+
+    }
+  }
+  //cout<<"we out"<<endl;
+}
 
 void createFinalTable(vector<string>& doubles,vector<vector<string>>& names, HashTable &will, HashTable &will0, int const size){
   string name;
@@ -289,6 +342,7 @@ void sortVector(vector<vector<string>> &names){
         // cout<<names[i][j]<<"-"<<names[i][j].substr(2,2)<<endl<<names[i][j+1]<<"-"<<names[i][j+1].substr(2,2)<<endl;
         // cout<<i<<"-"<<j<<endl;
         // cout<<names[i].size()<<endl;
+        //out<<names[i][k].substr(2,2)<<endl<<names[i][k+1].substr(2,2)<<endl;
         if(stoi(names[i][k].substr(2,2))>stoi(names[i][k+1].substr(2,2))){
           temp=names[i][k];
           names[i][k]=names[i][k+1];
@@ -324,6 +378,7 @@ void sortVector(vector<vector<string>> &names){
 void standardTime(vector<vector<string>> &names){
   for(int i = 0; i < names.size(); i++){
     for(int j = 1; j < names[i].size(); j++){
+      //cout<<names[i][j].substr(2,2)<<endl;
       if(stoi(names[i][j].substr(2,2)) > 12){
         int toChange = stoi(names[i][j].substr(2,2)) - 12;
         string str = to_string(toChange);
@@ -332,7 +387,7 @@ void standardTime(vector<vector<string>> &names){
           names[i][j].insert(7," PM ");
         }
         else{
-          names[i][j].insert(6," PM ");
+          names[i][j].insert(7," PM ");
         }
 
       }
@@ -341,12 +396,13 @@ void standardTime(vector<vector<string>> &names){
       }
       if(names[i][j].substr(2,1) == "0"){
         names[i][j].erase(2,1);
-        names[i][j].insert(6," AM ");
+        names[i][j].insert(7," AM ");
       }
     }
   }
   cout<<"Loading all users"<<endl;
   for(int k = 0; k < names.size(); k++){
+    //cout<<k<<endl;
     for(int h = 0; h < names[k].size(); h++){
       cout << names[k][h] << endl;
     }
@@ -441,7 +497,13 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vec
 
   }
 }
+  //<<"yo"<<endl;
+
+  fixTime(names);
+
+  //cout<<"YOOOOO"<<endl;
   sortVector(names);
+
   standardTime(names);
 
 }
@@ -522,6 +584,8 @@ void addUser(HashTable &will, HashTable &will0, vector<vector<string>> &names, s
   bool new0=true;
   addInterest(name,will0,graphOfGroups, names, will, new0);
 }
+
+
 //main method
   //Frisbee,Studying,SpikeBall,Swimming,WorkingOut,Biking,Running,Gaming,Climbing
   int main(int argc, char const *argv[]){
@@ -807,4 +871,3 @@ void addUser(HashTable &will, HashTable &will0, vector<vector<string>> &names, s
     }
 
   }
-
