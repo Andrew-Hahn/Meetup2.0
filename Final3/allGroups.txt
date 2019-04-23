@@ -1,0 +1,2 @@
+DefualtGroup, FileIO test group,11:00, C4C, Frisbee
+DefualtGroup2, Test 2 group, 12:00, CU Rec, Working Out, Running
