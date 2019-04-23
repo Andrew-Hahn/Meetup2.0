@@ -341,6 +341,85 @@ void standardTime(vector<vector<string>> &names){
     }
   }
 }
+void fixTime2(vector<vector<string>> &names , string name, string interest){
+  int num;
+  for(int i=0; i<names.size(); i++){
+    for(int j=1; j<names[i].size(); j++){
+      if(names[i][0]==name){
+        if(names[i][j].substr(0,1)==interest){
+        }
+        else{
+          if(names[i][j].substr(8,2)=="PM"){
+            if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+              num = stoi(names[i][j].substr(2,2));
+              num = num + 12;
+              names[i][j].erase(8,2);
+              names[i][j].erase(2,2);
+              string newNum = to_string(num);
+              names[i][j].insert(2,newNum);
+              names[i][j].erase(7,1);
+            }
+            else if(names[i][j].substr(2,2)=="12"){
+              names[i][j].erase(8,2);
+              names[i][j].erase(7,1);
+            }
+            else{
+              names[i][j].erase(8,2);
+              names[i][j].insert(2,1,'0');
+              names[i][j].erase(7,1);
+            }
+
+          }
+          else{
+            if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+              names[i][j].erase(8,2);
+              names[i][j].erase(7,1);
+            }
+            else{
+              names[i][j].erase(8,2);
+              names[i][j].insert(2,1,'0');
+              names[i][j].erase(7,1);
+            }
+            }
+        }
+      }
+      else{
+      if(names[i][j].substr(8,2)=="PM"){
+        if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+          num = stoi(names[i][j].substr(2,2));
+          num = num + 12;
+          names[i][j].erase(8,2);
+          names[i][j].erase(2,2);
+          string newNum = to_string(num);
+          names[i][j].insert(2,newNum);
+          names[i][j].erase(7,1);
+        }
+        else if(names[i][j].substr(2,2)=="12"){
+          names[i][j].erase(8,2);
+          names[i][j].erase(7,1);
+        }
+        else{
+          names[i][j].erase(8,2);
+          names[i][j].insert(2,1,'0');
+          names[i][j].erase(7,1);
+        }
+
+      }
+      else{
+        if(names[i][j].substr(2,2)=="11"|| names[i][j].substr(2,2)=="10"){
+          names[i][j].erase(8,2);
+          names[i][j].erase(7,1);
+        }
+        else{
+          names[i][j].erase(8,2);
+          names[i][j].insert(2,1,'0');
+          names[i][j].erase(7,1);
+        }
+        }
+      }
+    }
+  }
+}
 
 void deleteInterest(HashTable &will0, string name, int interest, vector<vector<string>> &names){
   int a=0;
@@ -379,14 +458,20 @@ void deleteInterest(HashTable &will0, string name, int interest, vector<vector<s
 
 void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vector<string>> &names, HashTable &will, bool new0){
   bool done = false;
-  bool fix = new0;
+  bool fix=new0;
   string message;
   string interest;
+  string interest2;
   int zz=0;
   while(done == false){
     cout << "What interest would you like to add? Enter 'back' if you would like to exit." << endl;
     cout << "Frisbee(1),Studying(2),SpikeBall(3),Swimming(4),Working Out(5),Biking(6),Running(7),Gaming(8),Climbing(9)" << endl;
     getline(cin,interest);
+    if(zz==0){
+      interest2=interest;
+      zz++;
+    }
+
     if(interest == "back"){
       done = true;
     }
@@ -429,12 +514,20 @@ void addInterest(string name, HashTable &will0, Graph &graphOfGroups, vector<vec
 
   }
 }
-  if(fix == true){
+  if(fix==true){
     fixTime(names);
     sortVector(names);
     standardTime(names);
   }
+  else{
+  fixTime2(names, name, interest2);
+  sortVector(names);
+  standardTime(names);
 }
+
+
+}
+
 
 void deleteNames(vector<vector<string>> &names, vector<string> &doubles){
   for (int i = 0; i < names.size(); i++){
@@ -776,3 +869,4 @@ void addUser(HashTable &will, HashTable &will0, vector<vector<string>> &names, s
     }
 
   }
+
